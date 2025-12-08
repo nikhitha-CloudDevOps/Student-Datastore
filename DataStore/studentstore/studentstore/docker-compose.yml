@@ -1,0 +1,50 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spring-mongo-app
+    ports:
+      - "8082:8082"
+    environment:
+      - MONGODB_HOST=mongo
+      - MONGODB_PORT=27017
+      - MONGODB_DBNAME=studentdb
+      - MONGODB_USERNAME=admin
+      - MONGODB_PASSWORD=testtesttest
+      - MONGODB_AUTH_DB=admin
+    depends_on:
+      - mongo
+    restart: always
+    volumes:
+      - app_data:/data
+
+  mongo:
+    image: mongo:6.0
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=testtesttest
+      - MONGO_INITDB_DATABASE=studentdb
+    volumes:
+      - mongo_data:/data/db
+    restart: always
+
+volumes:
+  mongo_data:
+  app_data:
+
+  # docker-compose up --build
+
+#docker exec -it mongodb mongosh -u admin -p testtesttest --authenticationDatabase admin
+
+# #use studentdb
+# db.createUser({ user: "admin", pwd: "testtesttest", roles: [{ role: "readWrite", db: "studentdb" }] })
+# db.students.insertMany([
+#   { name: "John Doe", rNo: 101, place: "Bangalore" },
+#   { name: "Sarah Khan", rNo: 102, place: "Hyderabad" }
+# ])
+# db.students.find().pretty()
+
