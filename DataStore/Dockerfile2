@@ -1,5 +1,5 @@
 FROM ubuntu
-MAINTAINER shiva
+MAINTAINER tanik
 RUN apt-get update -y
 RUN apt-get install -y openjdk-11-jdk
 EXPOSE 8082
