@@ -5,6 +5,7 @@ RUN apt-get install -y openjdk-11-jdk
 EXPOSE 8082
 WORKDIR /app/source
 COPY . .
+RUN chmod +x mvnw
 RUN ./mvnw clean package -Dspring.profiles.active=build
 RUN mv ./target/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
